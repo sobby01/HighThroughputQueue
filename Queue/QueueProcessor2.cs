@@ -1,4 +1,5 @@
-﻿using HighThroughputQueue;
+﻿using Core;
+using HighThroughputQueue;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,11 +15,11 @@ namespace QueueClient
             int noOfQueues = 2;
             int noOfWorkers = 4;
 
-            HighThroughputQueue_2<string>[] queues = new HighThroughputQueue_2<string>[noOfQueues];
+            HighThroughputQueue_2<QueueContent>[] queues = new HighThroughputQueue_2<QueueContent>[noOfQueues];
             // Create queues
             for (int i = 0; i < noOfQueues; i++)
             {
-                queues[i] = new HighThroughputQueue_2<string>(noOfWorkers, ProcessItem);
+                queues[i] = new HighThroughputQueue_2<QueueContent>(noOfWorkers, ProcessItem, $"queue {i}");
                 queues[i].StartProcessing();
             }
 
@@ -28,19 +29,25 @@ namespace QueueClient
             {
                 string item = $"Item {i}";
                 int queueIndex = i % noOfQueues;
-                queues[queueIndex].Enqueue(item);
+                QueueContent qc = new QueueContent()
+                {
+                    Item = item,
+                    Name = queues[queueIndex].Name
+                };
+                
+                queues[queueIndex].Enqueue(qc);
             }
 
             Thread.Sleep(1000);
             Console.ReadKey();
         }
 
-        public void ProcessItem(string item)
+        public void ProcessItem(QueueContent content)
         {
             // Simulate processing time
             Thread.Sleep(1000);
 
-            Console.WriteLine($"Processed: {item}");
+            Console.WriteLine($"Processed: {content.Item} By: {content.Name}");
         }
     }
 }

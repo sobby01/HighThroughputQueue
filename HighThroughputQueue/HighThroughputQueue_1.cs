@@ -9,7 +9,6 @@ namespace HighThroughputQueue
         private int workers;
         private Action<T> action;
 
-
         public HighThroughputQueue_1(int numWorkers, Action<T> processAction)
         {
             this.workers = numWorkers;

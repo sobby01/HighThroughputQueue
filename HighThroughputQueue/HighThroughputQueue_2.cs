@@ -8,11 +8,21 @@ namespace HighThroughputQueue
         private SemaphoreSlim semaphore = new SemaphoreSlim(0);
         private int workers;
         private Action<T> action;
+        private string queueName;
 
-        public HighThroughputQueue_2(int numWorkers, Action<T> processAction)
+        public string Name
+        {
+            get
+            {
+                return queueName;
+            }
+        }
+
+        public HighThroughputQueue_2(int numWorkers, Action<T> processAction, string queueName)
         {
             this.workers = numWorkers;
             this.action = processAction;
+            this.queueName = queueName;
         }
 
         public void Enqueue(T item)

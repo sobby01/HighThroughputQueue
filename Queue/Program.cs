@@ -3,6 +3,6 @@ using QueueClient;
 
 Console.WriteLine("Processing  Queues");
 
-QueueProcessor1 processor1 = new QueueProcessor1();
+QueueProcessor2 processor1 = new QueueProcessor2();
 processor1.Process();
 
