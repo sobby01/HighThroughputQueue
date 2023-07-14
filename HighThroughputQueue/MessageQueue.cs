@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace HighThroughputQueue
 {
-    public class HighThroughputQueue_4<T> : IMessageQueue<T>
+    public class MessageQueue<T> : IMessageQueue<T>
     {
         private ConcurrentDictionary<string, ConcurrentQueue<T>> concurrentQueues = new ConcurrentDictionary<string, ConcurrentQueue<T>>();
         private ConcurrentDictionary<string, IWorker<T>> workers = new ConcurrentDictionary<string, IWorker<T>>();

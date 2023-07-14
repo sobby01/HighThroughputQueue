@@ -12,7 +12,7 @@ namespace QueueClient
     {
         public void Process()
         {
-            IMessageQueue<string> multiQueue = new HighThroughputQueue_4<string>();
+            IMessageQueue<string> multiQueue = new MessageQueue<string>();
 
             // Create workers
             IWorker<string> worker1 = new Worker<string>();
@@ -38,26 +38,6 @@ namespace QueueClient
             // Stop workers
             worker1.StopWorking();
             worker2.StopWorking();
-        }
-
-        void EnqueueItems(HighThroughputQueue_3<string> queue)
-        {
-            for (int i = 0; i < 10; i++)
-            {
-                string item = $"Item {i}";
-                queue.Enqueue(item);
-
-                //simulate delay between enqueueing items
-                Thread.Sleep(100);
-            }
-        }
-
-        public void ProcessItem(string item)
-        {
-            //simulate processing time
-            Thread.Sleep(1000);
-
-            Console.WriteLine($"Processed the item: {item}");
         }
     }
 }
